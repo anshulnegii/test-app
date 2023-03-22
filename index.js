@@ -8,17 +8,9 @@ const client = new Client({
 });
 const app = express();
 
-app.get('/', (req, res) => {
-    client.on('qr', qr => {
-        const qrCode = qrcode.imageSync(qr, { type: 'png' });
-        const qrCodeURI = `data:image/png;base64,${qrCode.toString('base64')}`;
-        res.send(`<img src="${qrCodeURI}">`);
-    });
-
+client.on('qr', (qr) => {
+    console.log('QR RECEIVED', qr);
 });
-app.listen(
-    process.env.PORT || 3000,
-)
 
 client.on('ready', () => {
     console.log('Client is ready!');
