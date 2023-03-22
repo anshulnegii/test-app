@@ -1,5 +1,5 @@
 const express = require('express');
-const qrcode = require('qr-image');
+const qrcode = require('qrcode-terminal');
 const { Client } = require('whatsapp-web.js');
 const client = new Client({
     puppeteer: {
@@ -8,8 +8,8 @@ const client = new Client({
 });
 const app = express();
 
-client.on('qr', (qr) => {
-    console.log('QR RECEIVED', qr);
+client.on('qr', qr => {
+    qrcode.generate(qr, {small: true});
 });
 
 client.on('ready', () => {
